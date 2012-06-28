@@ -1,0 +1,30 @@
+data Option a = Some a | None
+
+let optionMonad = {
+  return: λx →
+    Some x
+  bind: λx f → match x
+    case (Some a) = f a
+    case None = None ()
+}
+
+let m = (do optionMonad
+  x ← Some 1
+  y ← Some 3
+  return x + y
+)
+
+match m
+  case (Some x) = console.log x
+  case None = console.log "I need both x and y"
+
+
+let m2 = (do optionMonad
+  x ← Some 1
+  y ← None ()
+  return x + y
+)
+
+match m2
+  case (Some x) = console.log x
+  case None = console.log "I need both x and y"

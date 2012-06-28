@@ -1,0 +1,16 @@
+let print x = console.log(x)
+
+let deferred = {
+  return: $.when
+  bind: \x f ->
+    let defer = $.Deferred ()
+    x.done (\v -> (f v).done defer.resolve)
+    defer.promise ()
+}
+
+let v = do deferred 
+  ip <- $.ajax 'http://cfaj.freeshell.org/ipaddr.cgi'
+  country <- $.ajax 'http://api.hostip.info/country.php'
+  return (ip ++ country)
+
+v.done print

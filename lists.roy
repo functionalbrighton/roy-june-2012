@@ -1,0 +1,37 @@
+data List a = Nil | Cons a (List a)
+
+let nil = Nil()
+
+let xs = Cons 1 (Cons 2 (Cons 3 nil))
+
+console.log(xs)
+
+let map f l = match l
+  case (Cons v r) = Cons (f v) (map f r)
+  case Nil = nil
+
+let filter f xs = match xs
+  case Nil = nil
+  case (Cons h t) = if (f h) then 
+        Cons h (filter f t)
+      else 
+        filter f t
+
+let head xs = match xs
+ case (Cons h t) = h
+
+let double x = x * 2
+
+let rs = filter (\x -> x > 3) (map (\x -> x * 2) xs)
+
+
+console.log rs
+
+let print xs = match xs 
+  case Nil = ""
+  case (Cons h t) = h ++ " " ++ (print t) 
+
+console.log (print rs)
+
+console.log (head xs)
+console.log (head nil)
